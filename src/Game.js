@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Board from './Board';
-import logo from './logo.svg';
 import './Game.css';
 
-class Game extends React.Component {
+class Game extends Component {
   constructor() {
     super();
     this.state = {
@@ -15,9 +14,11 @@ class Game extends React.Component {
 
       xIsNext: true
     };
+    this.returnToPreviousMoves = this.returnToPreviousMoves.bind(this)
   }
 
   handleClick(i) {
+    console.log(i)
     const history = this.state.history;
     const current = history[history.length - 1];
     const squares = current.squares.slice();
@@ -36,6 +37,10 @@ class Game extends React.Component {
     });
   }
 
+  returnToPreviousMoves(e,move){
+   e.preventDefault()
+    console.log(move)
+  }
 
 
   render() {
@@ -47,7 +52,7 @@ class Game extends React.Component {
       const desc = move ? "Move #" + move : "Game start";
       return (
         <li key={move}>
-          {desc}
+          <a href='/' onClick={(e) => this.returnToPreviousMoves(e,move)}>{desc}</a>
         </li>
       );
     });
