@@ -38,8 +38,10 @@ class Game extends Component {
   }
 
   returnToPreviousMoves(e,move){
-   e.preventDefault()
-    console.log(move)
+    e.preventDefault()
+    this.setState({
+      squares: this.state.history[move].squares.slice()
+    })
   }
 
 
