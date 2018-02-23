@@ -11,15 +11,13 @@ class Game extends Component {
           squares: Array(9).fill(null)
         }
       ],
-
+      currentMove: 0,
       xIsNext: true
     };
-    this.returnToPreviousMoves = this.returnToPreviousMoves.bind(this)
   }
 
   handleClick(i) {
-    console.log(i)
-    const history = this.state.history;
+    const history = this.state.history.slice(0, this.state.currentMove+1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
     if (calculateWinner(squares) || squares[i]) {
@@ -32,22 +30,23 @@ class Game extends Component {
           squares: squares
         }
       ]),
-   //   stepNumber: history.length,
+      currentMove: history.length,
       xIsNext: !this.state.xIsNext
     });
   }
 
   returnToPreviousMoves(e,move){
     e.preventDefault()
+    console.log(move)
     this.setState({
-      squares: this.state.history[move].squares.slice()
+      currentMove: move
     })
   }
 
 
   render() {
     const history = this.state.history;
-    const current = history[history.length - 1];
+    const current = history[this.state.currentMove];
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
